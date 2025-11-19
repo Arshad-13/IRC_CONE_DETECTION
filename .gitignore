@@ -1,0 +1,47 @@
+# Ignore Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Dataset - DO NOT PUSH
+cone.v1i.yolov8/
+
+# Model checkpoints (keep only best.pt in repo)
+runs/detect/cone_detection/weights/last.pt
+runs/detect/cone_detection/weights/epoch*.pt
+
+# Cache files
+*.cache
+
+# Temporary files
+*.tmp
+*.log
+
+# Large files
+*.avi
+*.mp4
+*.mov
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Test outputs
+test_output/
