@@ -10,26 +10,26 @@ def train_cone_detection_model():
     """
     Train YOLOv8 model for cone detection
     """
-    # Initialize YOLOv8 model (using nano model for faster training)
-    # You can change 'yolov8n.pt' to 'yolov8s.pt', 'yolov8m.pt', 'yolov8l.pt', or 'yolov8x.pt' for larger models
-    model = YOLO('yolov8n.pt')
+    # Initialize YOLOv8 model (using medium model for better accuracy)
+    model = YOLO('yolov8m.pt')
     
     # Path to data configuration file
-    data_yaml = 'cone.v1i.yolov8/data.yaml'
+    data_yaml = 'combined_data.yaml'
     
     # Training parameters
+    print("Starting training on GPU...")
     results = model.train(
         data=data_yaml,           # path to data.yaml
-        epochs=20,                # number of training epochs
+        epochs=100,               # number of training epochs
         imgsz=640,                # image size
-        batch=8,                  # batch size (adjust based on your GPU memory)
-        name='cone_detection',    # experiment name
+        batch=16,                 # batch size (adjust based on your GPU memory)
+        name='cone_detection_combined', # experiment name
         project='runs/detect',    # project directory
-        patience=50,              # early stopping patience
+        patience=20,              # early stopping patience
         save=True,                # save checkpoints
         save_period=10,           # save checkpoint every N epochs
-        device='cpu',             # GPU device (use 'cpu' if no GPU available)
-        workers=4,                # number of worker threads
+        device=0,                 # GPU device index (0 for first GPU)
+        workers=8,                # number of worker threads
         optimizer='auto',         # optimizer (auto, SGD, Adam, AdamW)
         verbose=True,             # verbose output
         seed=42,                  # random seed for reproducibility
@@ -48,6 +48,14 @@ def train_cone_detection_model():
     
     print("\n" + "="*70)
     print("Training completed!")
+    print(f"Best model saved at: {results.save_dir}/weights/best.pt")
+    print("="*70 + "\n")
+    
+    # Validate the model
+    print("Validating model...")
+    metrics = model.val()
+    print(f"mAP50-95: {metrics.box.map}")
+    print(f"mAP50: {metrics.box.map50}")
     print("="*70)
     
     # Get the best model path

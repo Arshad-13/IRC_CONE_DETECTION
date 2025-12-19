@@ -1,0 +1,16 @@
+path: s:/cone
+train:
+  - cone.v1i.yolov8/train/images
+  - cone1.v1i.yolov11/train/images
+  - cone2.v1i.yolov11/train/images
+val:
+  - cone.v1i.yolov8/valid/images
+  - cone1.v1i.yolov11/valid/images
+  - cone2.v1i.yolov11/valid/images
+test:
+  - cone.v1i.yolov8/test/images
+  - cone1.v1i.yolov11/test/images
+  - cone2.v1i.yolov11/test/images
+
+nc: 4
+names: ['blue', 'red', 'yellow', 'cone']
